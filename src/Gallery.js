@@ -4,24 +4,8 @@ import ImageModal from "./ImageModal";
 
 const Gallery = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-
   const [images, setImages] = useState([]);
-
-  const [currentImageInfo, setCurrentImageInfo] = useState({
-    imageSrc: null,
-    index: null,
-    hasNext: false,
-    hasPrevious: false,
-  });
-
-  const setImageByIndex = (index) => {
-    setCurrentImageInfo({
-      imageSrc: images[index],
-      index: index,
-      hasNext: index + 1 <= images.length,
-      hasPrevious: index - 1 >= 0,
-    });
-  };
+  const [currentImageIndex, setCurrentImageIndex] = useState(null);
 
   const fetchApi = async () => {
     await fetch(
@@ -39,9 +23,11 @@ const Gallery = () => {
     <>
       {modalIsOpen && (
         <ImageModal
-          image={currentImageInfo}
+          image={images[currentImageIndex]}
           setModalIsOpen={setModalIsOpen}
-          setImageByIndex={setImageByIndex}
+          imagesCount={images.length}
+          currentImageIndex={currentImageIndex}
+          setCurrentImageIndex={setCurrentImageIndex}
         />
       )}
 
@@ -56,7 +42,7 @@ const Gallery = () => {
             src={imageSrc}
             alt="test"
             onClick={() => {
-              setImageByIndex(index);
+              setCurrentImageIndex(index);
               setModalIsOpen(true);
             }}
           />

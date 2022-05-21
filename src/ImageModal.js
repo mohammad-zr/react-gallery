@@ -1,34 +1,36 @@
 import "./ImageModal.css";
 
-const Modal = ({ image, setModalIsOpen, setImageByIndex }) => {
+const Modal = ({
+  image,
+  setModalIsOpen,
+  imagesCount,
+  currentImageIndex,
+  setCurrentImageIndex,
+}) => {
   return (
     <>
       <div className="modal">
         <div className="modal-content">
           <div className="img-modal">
-            {image.hasPrevious && (
+            {currentImageIndex > 0 && (
               <button
                 className="prev"
-                onClick={() => setImageByIndex(image.index - 1)}
+                onClick={() => setCurrentImageIndex(currentImageIndex - 1)}
               >
                 &#8249;
               </button>
             )}
 
-            <img
-              style={{ maxWidth: "600px" }}
-              src={image.imageSrc}
-              alt="test"
-            />
+            <img style={{ maxWidth: "600px" }} src={image} alt="test" />
 
             <button className="close" onClick={() => setModalIsOpen(false)}>
               &#10006;
             </button>
 
-            {image.hasNext && (
+            {currentImageIndex < imagesCount - 1 && (
               <button
                 className="next"
-                onClick={() => setImageByIndex(image.index + 1)}
+                onClick={() => setCurrentImageIndex(currentImageIndex + 1)}
               >
                 &#8250;
               </button>
