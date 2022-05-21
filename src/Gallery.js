@@ -35,19 +35,21 @@ const Gallery = () => {
         Load images from unsplash
       </button>
 
-      <div className="flexbin flexbin-margin">
+      <ul>
         {images.map((imageSrc, index) => (
-          <img
-            key={index}
-            src={imageSrc}
-            alt="test"
-            onClick={() => {
-              setCurrentImageIndex(index);
-              setModalIsOpen(true);
-            }}
-          />
+          <li key={index}>
+            <img
+              key={index}
+              src={imageSrc}
+              alt="test"
+              onClick={() => {
+                setCurrentImageIndex(index);
+                setModalIsOpen(true);
+              }}
+            />
+          </li>
         ))}
-      </div>
+      </ul>
     </>
   );
 };
