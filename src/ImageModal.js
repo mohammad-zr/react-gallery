@@ -3,17 +3,17 @@ import "./ImageModal.css";
 const Modal = ({ image, setModalIsOpen, setImageByIndex }) => {
   return (
     <>
-      <div id="myModal" className="modal">
+      <div className="modal">
         <div className="modal-content">
           <div className="img-modal">
-            {image.previousImage ? (
+            {image.hasPrevious && (
               <button
                 className="prev"
                 onClick={() => setImageByIndex(image.index - 1)}
               >
                 &#8249;
               </button>
-            ) : null}
+            )}
 
             <img
               style={{ maxWidth: "600px" }}
@@ -25,14 +25,14 @@ const Modal = ({ image, setModalIsOpen, setImageByIndex }) => {
               &#10006;
             </button>
 
-            {image.nextImage ? (
+            {image.hasNext && (
               <button
                 className="next"
                 onClick={() => setImageByIndex(image.index + 1)}
               >
                 &#8250;
               </button>
-            ) : null}
+            )}
           </div>
         </div>
       </div>

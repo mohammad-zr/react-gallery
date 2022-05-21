@@ -5,25 +5,23 @@ import ImageModal from "./ImageModal";
 const Gallery = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
+  const [images, setImages] = useState([]);
+
   const [currentImageInfo, setCurrentImageInfo] = useState({
-    imageSrc: "",
-    index: 0,
-    nextImage: null,
-    previousImage: null,
+    imageSrc: null,
+    index: null,
+    hasNext: false,
+    hasPrevious: false,
   });
 
   const setImageByIndex = (index) => {
     setCurrentImageInfo({
       imageSrc: images[index],
       index: index,
-      nextImage: index + 1 <= images.length ? images[index + 1] : null,
-      previousImage: index - 1 >= 0 ? images[index - 1] : null,
+      hasNext: index + 1 <= images.length,
+      hasPrevious: index - 1 >= 0,
     });
-
-    setModalIsOpen(true);
   };
-
-  const [images, setImages] = useState([]);
 
   const fetchApi = async () => {
     await fetch(
@@ -40,13 +38,11 @@ const Gallery = () => {
   return (
     <>
       {modalIsOpen && (
-        <>
-          <ImageModal
-            image={currentImageInfo}
-            setModalIsOpen={setModalIsOpen}
-            setImageByIndex={setImageByIndex}
-          />
-        </>
+        <ImageModal
+          image={currentImageInfo}
+          setModalIsOpen={setModalIsOpen}
+          setImageByIndex={setImageByIndex}
+        />
       )}
 
       <button type="button" onClick={fetchApi}>
@@ -59,7 +55,10 @@ const Gallery = () => {
             key={index}
             src={imageSrc}
             alt="test"
-            onClick={() => setImageByIndex(index)}
+            onClick={() => {
+              setImageByIndex(index);
+              setModalIsOpen(true);
+            }}
           />
         ))}
       </div>
